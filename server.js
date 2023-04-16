@@ -11,6 +11,8 @@ const sdk = new BlockadeLabsSdk({
 const app = express()
 const port = process.env.PORT||3000
 
+app.use(express.json())
+
 app.get('/styles', async (req, res)=> {
     const styles = await sdk.getSkyboxStyles()
     res.status(200).json(styles)
@@ -18,6 +20,7 @@ app.get('/styles', async (req, res)=> {
 
 app.post('/generate', async (req, res) => {
   const {prompt, styleId} = req.body
+  console.log(prompt, styleId)
   const generateRequest = await sdk.generateSkybox({prompt: prompt, skybox_style_id: styleId})
 
   res.status(200).json(generateRequest)
