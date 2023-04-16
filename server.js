@@ -16,6 +16,21 @@ app.get('/styles', async (req, res)=> {
     res.status(200).json(styles)
 })
 
+app.post('/generate', async (req, res) => {
+  const {prompt, styleId} = req.body
+  const generateRequest = await sdk.generateSkybox({prompt: prompt, skybox_style_id: styleId})
+
+  res.status(200).json(generateRequest)
+})
+
+app.post('/status', async (req, res) => {
+  const {id} = req.body
+  const status = await sdk.getImagineById({id: id})
+
+  res.status(200).json(status)
+})
+
+
 app.listen(port)
 console.log(`listening on port ${port}`)
 
